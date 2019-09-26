@@ -4,6 +4,11 @@ set -e -x
 
 if ! command -v docker > /dev/null ; then
   curl -sSL https://get.docker.com/ | sh
+
+  mkdir -p /var/vcap/data/docker-root
+  sed -i '/ExecStart/c\ExecStart=/usr/bin/dockerd --data-root /var/vcap/data/docker-root/ -H fd:// $DOCKER_OPTS' /lib/systemd/system/docker.service
+  systemctl daemon-reload
+  service docker restart
 fi
 
 # pull the rootfs
