@@ -12,7 +12,12 @@ do
   umount /var/vcap/data/dstate/store/images/image-$i/rootfs/dev
   umount /var/vcap/data/dstate/store/images/image-$i/rootfs/sys
 
-  /var/vcap/packages/grootfs/bin/grootfs --config groot_config.yml delete image-$i
+  umount /var/vcap/data/dstate/store/images/image-$i/rootfs
 
   rmdir /sys/fs/cgroup/memory/process-$i
 done
+
+umount /var/vcap/data/dstate/store
+
+rm -rf  /var/vcap/data/dstate/store
+rm /var/vcap/data/dstate/backing-file
