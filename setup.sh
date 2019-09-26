@@ -2,7 +2,18 @@
 
 set -e -x
 
-/var/vcap/packages/grootfs/bin/grootfs --config groot_config.yml init-store
+umount /var/vcap/store || true
+umount /var/vcap/data/dstate/store || true
+mkfs.xfs -f /dev/sdb1
+mkdir -p /var/vcap/data/dstate/store
+mount -o pquota,noatime -t xfs /dev/sdb1 /var/vcap/data/dstate/store
+
+# init store
+for dir in images l locks meta projectids tmp volumes; do
+  mkdir -p /var/vcap/data/dstate/store/$dir
+done
+mkdir /var/vcap/data/dstate/store/meta/dependencies
+echo '{"uid-mappings":[],"gid-mappings":[]}' > /var/vcap/data/dstate/store/meta/namespace.json
 
 for i in $(seq 20)
 do
