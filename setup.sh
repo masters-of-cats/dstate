@@ -18,10 +18,30 @@ docker ps -a -q | xargs docker rm
 
 # init store
 touch /var/vcap/data/dstate/backing-file
+chmod 600 /var/vcap/data/dstate/backing-file
 truncate -s 266683506688 /var/vcap/data/dstate/backing-file
 mkfs.xfs -f /var/vcap/data/dstate/backing-file
 mkdir -p /var/vcap/data/dstate/store
 mount -o loop,pquota,noatime -t xfs /var/vcap/data/dstate/backing-file /var/vcap/data/dstate/store
+mkdir -p /var/vcap/data/dstate/store/meta
+echo '{"uid-mappings":[],"gid-mappings":[]}' > /var/vcap/data/dstate/store/meta/namespace.json
+chown root:root /var/vcap/data/dstate/store
+chmod 700 /var/vcap/data/dstate/store
+
+# create store directories
+for dir in images locks meta projectids tmp volumes l projectids; do
+  mkdir -p /var/vcap/data/dstate/store/$dir
+  chmod 755 /var/vcap/data/dstate/store/$dir
+  chown root:root /var/vcap/data/dstate/store/$dir
+done
+
+mkdir -p /var/vcap/data/dstate/store/meta/dependencies
+chmod 755 /var/vcap/data/dstate/store/meta/dependencies
+chown root:root /var/vcap/data/dstate/store/meta/dependencies
+
+mknod -m 0 /var/vcap/data/dstate/store/whiteout_dev c 0 0
+chown root:root /var/vcap/data/dstate/store/whiteout_dev
+
 
 # unpack layer
 mkdir -p /var/vcap/data/dstate/store/volumes/layer
