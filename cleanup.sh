@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 set -x
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 killall -9 chrome || true
 killall -9 node || true
