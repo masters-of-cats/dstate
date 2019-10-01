@@ -2,7 +2,7 @@
 
 set -e -x
 
-DIR="$(dirname "$0")"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 "$DIR/assets/grootfs" --config "$DIR/groot_config.yml" init-store
 
