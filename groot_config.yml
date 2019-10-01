@@ -1,19 +1,16 @@
-store: /var/vcap/data/dstate/store
-tardis_bin: /var/vcap/packages/grootfs/bin/tardis
-newuidmap_bin: /var/vcap/packages/garden-idmapper/bin/newuidmap
-newgidmap_bin: /var/vcap/packages/garden-idmapper/bin/newgidmap
+store: store
+tardis_bin: assets/tardis
 metron_endpoint: 127.0.0.1:3457
 log_level: debug
-log_file: /var/vcap/data/dstate/groot.log
+log_file: groot.log
 create:
   exclude_image_from_quota: true
   skip_layer_validation: true
   with_clean: true
-  clean_log_file: /var/vcap/data/dstate/groot.clean.log
+  clean_log_file: groot.clean.log
   without_mount: false
   disk_limit_size_bytes: 524288000
   insecure_registries: []
-  remote_layer_client_certificates_path: /var/vcap/jobs/garden/certs
 clean:
   threshold_bytes: 266683506688
 init:
