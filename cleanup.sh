@@ -14,7 +14,7 @@ do
   umount "$DIR/store/images/image-$i/rootfs/dev"
   umount "$DIR/store/images/image-$i/rootfs/sys"
 
-  "$DIR/assets/grootfs" --config "$DIR/assets/groot_config.yml" delete "image-$i"
+  "$DIR/assets/grootfs" --config "$DIR/groot_config.yml" delete "image-$i"
 
   rmdir "/sys/fs/cgroup/memory/process-$i"
 done
