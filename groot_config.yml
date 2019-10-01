@@ -1,4 +1,4 @@
-store: store
+store: /usr/var/store
 tardis_bin: assets/tardis
 metron_endpoint: 127.0.0.1:3457
 log_level: debug
