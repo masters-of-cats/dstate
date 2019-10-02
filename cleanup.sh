@@ -11,9 +11,9 @@ killall -9 npm || true
 
 for i in $(seq 20)
 do
-  umount "$STORE/images/image-$i/rootfs/proc"
-  umount "$STORE/images/image-$i/rootfs/dev"
-  umount "$STORE/images/image-$i/rootfs/sys"
+  if grep -q "images/image-$i/rootfs/proc" /proc/self/mountinfo; then umount "$STORE/images/image-$i/rootfs/proc"; fi
+  if grep -q "images/image-$i/rootfs/dev" /proc/self/mountinfo; then umount "$STORE/images/image-$i/rootfs/dev"; fi
+  if grep -q "images/image-$i/rootfs/sys" /proc/self/mountinfo; then umount "$STORE/images/image-$i/rootfs/sys"; fi
 
   "$DIR/assets/grootfs" --config "$DIR/groot_config.yml" delete "image-$i"
 
