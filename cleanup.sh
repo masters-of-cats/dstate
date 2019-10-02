@@ -17,5 +17,5 @@ do
 
   "$DIR/assets/grootfs" --config "$DIR/groot_config.yml" delete "image-$i"
 
-  rmdir "/sys/fs/cgroup/memory/process-$i"
+  if [ -d "/sys/fs/cgroup/memory/process-$i" ]; then rmdir "/sys/fs/cgroup/memory/process-$i"; fi
 done
